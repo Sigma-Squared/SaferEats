@@ -9,12 +9,9 @@ Create Restaurant ADT & API | **Tentative Complete**
 Find suitable Tree data structure | **Incomplete**
 
 ##Testing
-To run the test or server, do
-```
-$ node main.js
-```
-or
+#####Testing the server
+run
 ```
 $ node server.js
 ```
-with nodejs installed (<https://nodejs.org/en/download/>).
+Then, go to <http://localhost/api?name=NAME> and replace NAME with whatever you want to query. The server will return a json with all the restaurants that match that name.
