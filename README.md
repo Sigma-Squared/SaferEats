@@ -1,6 +1,9 @@
 
 # SaferEats
-Node.js back end + AngularJS front end will go here.
+NodeJS back end + AngularJS front end will go here.
+##Dependancies
+* NodeJS <http://nodejs.org/>
+
 ##TO DO
 #####Chamu
 Task | Status
