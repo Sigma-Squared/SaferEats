@@ -4,11 +4,11 @@ class Restaurant {
 		this.name = name;
 		this.address = address;
 		this.location = location;
-	}
+    }
 
-	getLocation() {
-		return this.location;
-	}
+    getLocation() {
+        return this.location;
+    }
 
 	getName() {
 		return this.name;

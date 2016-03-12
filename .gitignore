@@ -28,3 +28,8 @@ build/Release
 
 # Optional REPL history
 .node_repl_history
+
+# Other
+jsconfig.json
+typings
+.vscode
