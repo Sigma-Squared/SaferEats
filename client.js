@@ -1,21 +1,3 @@
-class Restaurant {
-	constructor(name, address, city, location, phone, id) {
-		this.name = name;
-		this.address = address;
-        this.city = city;
-		this.location = location;
-        this.phone = phone;
-        this.id = id;
-        this.violations = [];
-    }
-    
-    add_violation(date, insp_type, viol_type, score, result, closed, desc, points) {
-        this.violations.push({
-            date, insp_type, viol_type, score, result, closed, desc, points
-        });
-    }
-}
-
 var app = angular.module('mainApp',[]);
 //global url
 //var gu = 'http://192.168.2.220';
@@ -26,11 +8,58 @@ var gu = 'http://almogo.noip.me';
 app.controller('mainCtrl', function($scope, $http){
 	$scope.haveCoords = false;
 	$scope.haveSearchRes = false;
-	$scope.searchParam = "fef";
-	$scope.personalData = [];
+	$scope.searchParam = null;
 	$scope.rests = [];
 
-	
+	var allNames = ['1000 SPIRITS', 'HANOVER GOURMET DELI', 'YORGANIC', 'RESTAURANT ANNISA'];
+
+	var filterByCount = function(length){
+		var filt = [];
+		for (let i = 0; i < allNames.length; i++){
+			if (allNames[i].split(' ').length == length){
+				filt.push(allNames[i]);
+			}
+		}
+		return filt;
+	}
+
+	var distincts = function(a){
+		var dists = [];
+		for (let i = 0; i < a.length; i++){
+			if (!(a[i] in dists)){
+				dists.push(a[i]);
+			}
+		}
+		return dists;
+	}
+
+	var overallCharMatches = function(byCount, inp){
+		let dinp = distincts(inp);
+		var passed = [];
+		for (let i = 0; i < byCount.length; i++){
+			let dis = distincts(byCount[i]);
+			let faults = 0;
+			for (let j = 0; j < dis.length; j++){
+				if (!(dis[j] in dinp)){
+					faults++;
+					if (faults == 3){
+						break;
+					}
+				}
+			}
+			if (faults < 3){
+				passed.push(byCount[i]);
+			}
+		}
+		return passed;
+	}
+
+	var getSim = function(a){
+		let length = a.split(' ').length;
+		return filterByCount(length);
+		//return overallCharMatches(byCount, a);
+	}	
+
 	$scope.showrests = function(){
 		console.log($scope.rests);
 		console.log($scope.personalData);
@@ -48,33 +77,18 @@ app.controller('mainCtrl', function($scope, $http){
   	}
 	}
 	$scope.search = function(){
-		if (true){
+		$scope.rests = [];
 			var par = {
 				method: 'GET',
 				url: gu + '/api?name=' + $scope.searchParam
 			}
 			$http(par).then(function success(response){
 				console.log(response);
-				$scope.rests = [response.data];
-				verifyRes([response.data]);
+				$scope.rests.push(response.data);
+				$scope.haveSearchRes = true;
 			}, function failure(response){
 				console.log("Failure: " + response);
-			});
-		}
-	}
-
-	var verifyRes = function(r){
-		if (r.length == 0){
-			$scope.haveSearchRes = false;
-		}
-		else {
-			$scope.haveSearchRes = true;
-			for (let i = 0; i < r.length; i++){
-				if (r[i] == null){
-					$scope.haveSearchRes = false;
-				}
-			}
-		}
+			})
 	}
 });
 
