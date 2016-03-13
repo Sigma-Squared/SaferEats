@@ -4,6 +4,7 @@
 'use strict';
 const express = require('express');
 const load_data = require('./data_loader.js');
+const algorithms = require('./algorithms.js')
 
 function main(data) {
     const port = 80;
@@ -11,18 +12,12 @@ function main(data) {
     app.set('json spaces', 3);
     //example server
     app.get('/api', function(req, res) {
-        let rest_array = [];
-        let query = req.query.name
-        console.log(`Doing linear search for restaurants with name ${query}`);
-        //simple linear search
-        for (let restaurant of data) {
-            if (restaurant.name == query)
-            rest_array.push(restaurant);  
-        }    
-        res.json(rest_array);
+        let query = req.query.name.toUpperCase();
+        console.log(`Doing binary search for name:"${query}"`);  
+        res.json( data[algorithms.binaryIndexOf(query, data)] );
     });
     app.listen(port, function() {
-        console.log(`Server running on port ${port}`);
+        console.log(`Server running on port ${port}. (^C to exit)`);
     });
 }
 

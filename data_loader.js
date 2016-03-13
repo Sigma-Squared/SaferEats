@@ -14,18 +14,23 @@ function load_data(callback) {
 
     let prev_rest = null;
     let mystream = csv_stream.createStream(options);
-    console.log('Starting load');
-    fs.createReadStream('small_data.csv').pipe(mystream)
+    console.log('Loading data into memory...');
+    
+    const fname = 'small_data.csv';
+    const total_lines = { 'small_data.csv': 150, 'raw_data.csv': 245531 };
+    let line_count = 0;
+    fs.createReadStream(fname).pipe(mystream)
         .on('error', function(err) {
             throw err;
         })
         .on('data', function(data) {
-            if (prev_rest && data.business_ID == prev_rest.id) {
+            if (prev_rest && data.name == prev_rest.name) {
                 //add violation
                 prev_rest.add_violation(data.inspection_date, data.inspection_type, data.violation_type, data.inspection_score,
                 data.inspection_result, data.inspection_closed_business, data.violation_description, data.violation_points);
             }
             else {
+                //add restaurant and violation
                 let new_restaurant  = new restaurant(data.name, data.address, data.city, 
                                         [Number(data.longitude), Number(data.latitude)], data.phone || undefined, data.business_ID);
                 new_restaurant.add_violation(data.inspection_date, data.inspection_type, data.violation_type, data.inspection_score,
@@ -33,9 +38,11 @@ function load_data(callback) {
                 dat.push(new_restaurant);
                 prev_rest = new_restaurant;
             }
+            //comment out below line to remove progress indicator.
+            process.stdout.write(`\r${(((++line_count)/total_lines[fname])*100).toFixed(2)}%`)
         })
         .on('end', function() {
-            console.log('Loading finished.')
+            console.log('\nFinished.')
             callback(dat);
         });
 }

@@ -11,6 +11,7 @@ class Restaurant {
     }
     
     add_violation(date, insp_type, viol_type, score, result, closed, desc, points) {
+        if (Number(score) == 0) return;
         this.violations.push({
             date, insp_type, viol_type, score, result, closed, desc, points
         })
