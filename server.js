@@ -7,7 +7,7 @@ const load_data = require('./data_loader.js');
 const algorithms = require('./algorithms.js')
 
 function main(data) {
-    const port = 80;
+    const port = 8080;
     let app = express();
     app.set('json spaces', 3);
     //example server
@@ -24,6 +24,17 @@ function main(data) {
             console.log("Not found.");
         }
     });
+
+	app.get('/', function (req, res) {
+	res.status(200);
+	res.sendFile("/home/ori/new/index.html");
+	});
+
+	app.get('/client.js', function (req, res) {
+	res.status(200);
+	res.sendFile("/home/ori/site/client.js");
+	});
+
     app.listen(port, function() {
         console.log(`Server running on port ${port}. (^C to exit)`);
     });
