@@ -32,7 +32,7 @@ function main(data) {
 
 	app.get('/client.js', function (req, res) {
 	res.status(200);
-	res.sendFile("/home/ori/site/client.js");
+	res.sendFile("/home/ori/new/client.js");
 	});
 
     app.listen(port, function() {

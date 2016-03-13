@@ -6,7 +6,7 @@
 <link data-require="bootstrap@3.3.1" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
 <script src="./client.js"></script>
 </head>
-<body ng-app='mainApp' ng-controller='mainCtrl' class="container" style="background: linear-gradient(to bottom, white, #DADADA);">
+<body ng-app='mainApp' ng-controller='mainCtrl' style="background: linear-gradient(to bottom, white, #DADADA);">
 
 <div class="container">
 
@@ -30,17 +30,18 @@
 Longitude: {{position.coords.longitude}}</pre>
 </div>
 
+<h1>{{searchParam}}</h1>
+<button ng-click="showrests()" class="btn btn-primary">Show Restaurants</button>
+
 <div class="row text-center" ng-show="haveSearchRes">
-<div class="col-md-8 col-md-offset-2">
-<div class="well" ng-repeat="res in rests">
+<div ng-repeat="res in rests">
 <h2>{{res.name}}</h2>
 <h6>{{res.address}}</h2>
 <h6>{{res.phone}}</h2>
-	<div class="text-left" ng-repeat="vio in res.violations">
+	<div ng-repeat="vio in res.violations">
 		<h5>Violation ({{vio.date}}): {{vio.desc}}</h5>
 	</div>
 <br>
-</div>
 </div>
 </div>
 
