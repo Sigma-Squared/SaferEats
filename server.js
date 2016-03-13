@@ -25,6 +25,18 @@ function main(data) {
         }
     });
 
+    	app.get('/mults', function(req, res) {
+		console.log("Performing substring search for name: " + req.query.name);
+		var qur = req.query.name.toUpperCase();
+		var results = algorithms.subSearch(data, qur);
+		if (results.length > 0){
+			res.json(results);
+		}
+		else {
+			res.json(null);
+		}
+	});
+
 	app.get('/', function (req, res) {
 	res.status(200);
 	res.sendFile("/home/ori/new/index.html");
