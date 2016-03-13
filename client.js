@@ -78,17 +78,31 @@ app.controller('mainCtrl', function($scope, $http){
 	}
 	$scope.search = function(){
 		$scope.rests = [];
+		var requests = [$scope.searchParam];
+		$scope.haveSearchRes = false;
+		for (let i = 0; i < requests.length; i++){
 			var par = {
 				method: 'GET',
-				url: gu + '/api?name=' + $scope.searchParam
+				url: gu + '/api?name=' + requests[i]
 			}
 			$http(par).then(function success(response){
-				console.log(response);
-				$scope.rests.push(response.data);
-				$scope.haveSearchRes = true;
+				console.log(response);	
+				console.log(response.data);
+				if (response.data != null){
+					$scope.rests.push(response.data);
+					$scope.haveSearchRes = true;
+				}
+				else {
+					//Note: This only works for requests arrays of length ONE
+					alert("Could not find restaurant");
+				}
+				console.log($scope.rests);
 			}, function failure(response){
 				console.log("Failure: " + response);
-			})
+			});
+		}
+
+		
 	}
 });
 
