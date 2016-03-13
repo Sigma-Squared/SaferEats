@@ -8,7 +8,7 @@ const load_data = require('./data_loader.js');
 function main(data) {
     const port = 80;
     let app = express();
-
+    app.set('json spaces', 3);
     //example server
     app.get('/api', function(req, res) {
         let rest_array = [];

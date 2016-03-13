@@ -10,7 +10,7 @@ function load_data(callback) {
     let options = { columns: ['name','program_identifier','inspection_date','description','address','city','zip_code',
     'phone','longitude','latitude','inspection_business_name','inspection_type','inspection_score','inspection_result',
     'inspection_closed_business','violation_type','violation_description','violation_points','business_ID',
-    'inspection_serial_num','violation_record_ID','location'] };
+    'inspection_serial_num','violation_record_ID','location'], enclosedChar: '"'};
 
     let prev_rest = null;
     let mystream = csv_stream.createStream(options);
