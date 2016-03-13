@@ -5,6 +5,20 @@ var gu = 'http://almogo.noip.me';
 
 //const Restaurant = require(gu + "/files/restaurant.js");
 
+app.filter('firstUp', function(){
+	return function(input){
+		input = input || "";
+		var outAr = input.split (' ');
+		var out = "";
+		console.log(outAr);
+		for (let i = 0; i < outAr.length; i++){
+			let r = outAr[i].charAt(0).toString().toUpperCase() + outAr[i].substr(1).toLowerCase();
+			out = out + r + " ";
+		}
+		return out;
+	}
+});
+
 app.controller('mainCtrl', function($scope, $http){
 	$scope.haveCoords = false;
 	$scope.haveSearchRes = false;

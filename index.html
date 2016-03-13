@@ -1,12 +1,12 @@
 <html>
 
 <head>
-<title>Ori Almog</title>
+<title>Safer Eats</title>
 <script data-require="angular.js@1.5.0" data-semver="1.5.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
 <link data-require="bootstrap@3.3.1" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
 <script src="./client.js"></script>
 </head>
-<body ng-app='mainApp' ng-controller='mainCtrl' class="container" style="background: linear-gradient(to bottom, white, #DADADA);">
+<body ng-app='mainApp' ng-controller='mainCtrl' class="container" style="background: linear-gradient(to bottom, white, #DADADA); background: no-repeat">
 
 <div class="container">
 
@@ -33,7 +33,7 @@ Longitude: {{position.coords.longitude}}</pre>
 <div class="row text-center" ng-show="haveSearchRes">
 <div class="col-md-8 col-md-offset-2">
 <div class="well" ng-repeat="res in rests">
-<h2>{{res.name}}</h2>
+<h2>{{res.name|firstUp}}</h2>
 <h6>{{res.address}}</h2>
 <h6>{{res.phone}}</h2>
 	<div class="text-left" ng-repeat="vio in res.violations">
