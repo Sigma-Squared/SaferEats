@@ -1,22 +1,21 @@
 'use strict';
 class Restaurant {
-	constructor(name, address, location) {
+	constructor(name, address, city, location, phone, id) {
 		this.name = name;
 		this.address = address;
+        this.city = city;
 		this.location = location;
+        this.phone = phone;
+        this.id = id;
+        this.violations = [];
     }
-
-    getLocation() {
-        return this.location;
+    
+    add_violation(date, insp_type, viol_type, score, result, closed, desc, points) {
+        if (Number(score) == 0) return;
+        this.violations.push({
+            date, insp_type, viol_type, score, result, closed, desc, points
+        })
     }
-
-	getName() {
-		return this.name;
-	}
-
-	getAddress() {
-		return this.address;
-	}
 }
 
 module.exports = Restaurant;

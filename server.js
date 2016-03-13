@@ -1,30 +1,32 @@
 // Ignore this, it's just for VS Code.
-/// <reference path="typings/main/ambient/express/index.d.ts" />
-/// <reference path="typings/main/ambient/node/index.d.ts" />
+/// <reference path="typings/main.d.ts" />
 
 'use strict';
 const express = require('express');
+const load_data = require('./data_loader.js');
+const algorithms = require('./algorithms.js')
 
-// ! require() is synchronous so this works.
-console.log('Loading data into memory...');
-const data = require('./data_loader.js');
-console.log('Finished.');
+function main(data) {
+    const port = 80;
+    let app = express();
+    app.set('json spaces', 3);
+    //example server
+    app.get('/api', function(req, res) {
+        let query = req.query.name.toUpperCase();
+        console.log(`Doing binary search for name:"${query}"`);
+        let index =  algorithms.binaryIndexOf(query, data);
+        if (index != -1) {
+            res.json( data[index] );
+            console.log("Found.")
+        }
+        else {
+            res.json(null);
+            console.log("Not found.");
+        }
+    });
+    app.listen(port, function() {
+        console.log(`Server running on port ${port}. (^C to exit)`);
+    });
+}
 
-const port = 80;
-let app = express();
-
-//example server
-app.get('/api', function(req, res) {
-    let rest_array = [];
-    let query = req.query.name
-    console.log(`Doing linear search for restaurants with name ${query}`);
-    //simple linear search
-    for (let restaurant of data) {
-        if (restaurant.name == query)
-           rest_array.push(restaurant);  
-    }    
-    res.json(rest_array);
-});
-app.listen(port, function() {
-    console.log(`Server running on port ${port}`);
-});
+load_data(main);
