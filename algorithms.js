@@ -25,4 +25,15 @@ function strcmp(a, b) {
     return 0;
 }
 
-module.exports = { binaryIndexOf }
+function subSearch(data, qur){
+	var results = [];
+	var sq = qur.toString();
+	for (var i = 0; i < data.length; i++){
+		if (data[i].name.indexOf(sq) > -1){
+			results.push(data[i]);
+		}
+	}
+	return results;
+}
+
+module.exports = { binaryIndexOf, subSearch }

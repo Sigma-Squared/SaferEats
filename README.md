@@ -1,4 +1,3 @@
-
 # SaferEats
 Node.js back end + AngularJS front end will go here.
 ##TO DO
@@ -6,15 +5,12 @@ Node.js back end + AngularJS front end will go here.
 Task | Status
 --- | --- | ---
 Create Restaurant ADT & API | **Tentative Complete**
-Find suitable Tree data structure | **Incomplete**
+Find suitable Tree data structure | **Tentative Complete**
 
 ##Testing
-To run the test or server, do
-```
-$ node main.js
-```
-or
+To run the server, do
 ```
 $ node server.js
 ```
 with nodejs installed (<https://nodejs.org/en/download/>).
+

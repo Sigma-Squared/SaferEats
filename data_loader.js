@@ -18,8 +18,8 @@ function load_data(callback) {
     let mystream = csv_stream.createStream(options);
     console.log('Loading data into memory...');
     
-    const fname = 'raw_data.csv';
-    const total_lines = { 'small_data.csv': 150, 'raw_data.csv': 245531 };
+    const fname = 'big_data.csv';
+    const total_lines = { 'small_data.csv': 150, 'big_data.csv': 245531 };
     let line_count = 0;
     let n_restaurants = 0;
     let n_violations = 0;
