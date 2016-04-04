@@ -23,10 +23,10 @@ class Restaurant {
         const R = 6371000; // metres
         let lat1 = deg2rad(location.latitude), lon1 = deg2rad(location.longitude);
         let lat2 = deg2rad(this.location.latitude), lon2 = deg2rad(this.location.longitude);
-        dlon = lon2 - lon1;
-        dlat = lat2 - lat1;
-        a = Math.pow(Math.sin(dlat/2),2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon/2),2); 
-        c = 2 * Math.atan2( Math.sqrt(a), Math.sqrt(1-a) );
+        let dlon = lon2 - lon1;
+        let dlat = lat2 - lat1;
+        let a = Math.pow(Math.sin(dlat/2),2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon/2),2); 
+        let c = 2 * Math.atan2( Math.sqrt(a), Math.sqrt(1-a) );
         return R * c;
     }
 }
