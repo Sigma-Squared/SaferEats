@@ -89,6 +89,11 @@ function main(data, tree) {
         res.status(200);
         res.sendFile(path.join(__dirname + '/client.js'));
 	});
+    
+    app.get('/favicon.ico', function(req, res) {
+       res.status(200);
+       res.sendFile(path.join(__dirname + '/favicon.ico')); 
+    });
 
     app.listen(port, function() {
         console.log(`Server running on port ${port}. (^C to exit)`);
