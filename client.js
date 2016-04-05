@@ -89,6 +89,25 @@ app.controller('mainCtrl', function($scope, $http) {
 		}
 	}
 	
+	$scope.reco = function(res, num){
+		
+		var cleanName = res.name.replace("&", "ORIALMOG");
+		
+		var par = {
+			method: 'GET',
+			url: '/reco?recom=' + num + '&name=' + cleanName
+		}
+		$http(par).then(function success(response){
+			
+			res.reco += num;
+			
+		}, function failure(response){
+			
+			alert("Could not vote!");
+			
+		});
+	}
+	
 	$scope.fillDefault = function(){
 		$scope.longitude = -121.9910337;
 		$scope.latitude = 47.2027651;
@@ -114,7 +133,7 @@ app.controller('mainCtrl', function($scope, $http) {
 				$scope.sorter = "-name";
 				break;
 			case 2:
-				$scope.sorter = "reco";
+				$scope.sorter = "-reco";
 				break;
 			case 3:
 				$scope.sorter = "violations.length";

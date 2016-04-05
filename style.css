@@ -8,9 +8,25 @@
 	padding: 15px;
 }
 
+.yellow{
+	color: gold;
+}
+
+.black{
+	color: black;
+}
+
+a:hover{
+	underline: false;
+}
+
 h1 {
 	font-family: 'Raleway', sans-serif;
 	font-size: 5em;
+}
+
+input {
+	margin-top: 5px;
 }
 
 h6 {

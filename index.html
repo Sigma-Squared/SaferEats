@@ -24,7 +24,7 @@
 
 		<p class="highmarg"> </p>
 		
-        <form class="col-md-5 form-inline text-center" id="search">
+        <form class="row form-inline text-center" id="search">
             <div class="form-group">
 				<h4>Search by name:</h4>
                 <input type="text" autocomplete="off" class="form-control" id="searchBox" ng-model="searchParam" placeholder="i.e. McDonalds">
@@ -33,18 +33,16 @@
             </div>
         </form>
 		
-		<form class="col-md-5 col-md-offset-2 form-inline text-center" id="search">
+		<form class="row form-inline text-center" id="search">
             <div class="form-group">
 				<h4>Search by location:</h4>
                 <input type="text" class="form-control" id="lon" ng-model="longitude" placeholder="Longitude">
                 <input type="text" class="form-control" id="lat" ng-model="latitude" placeholder="Latitude">
-				<p class="lowmarg"> </p>
-				<span>Radius (km): </span>
                 <input type="number" min="1" max="10" class="form-control" id="rad" ng-model="radius" placeholder="Radius (km)">
 				<p class="lowmarg"> </p>
-                <button type="submit" ng-click="fillDefault()" class="btn btn-warning"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>
+                <button ng-click="fillDefault()" class="btn btn-warning"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>
                 <button type="submit" ng-click="areaSearch()" class="btn btn-info">Search <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-                <button type="submit" ng-click="getLoc()" class="btn btn-success"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></button>
+                <button ng-click="getLoc()" class="btn btn-success"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></button>
             </div>
         </form>
 
@@ -82,14 +80,16 @@
 						<h6>Phone: {{res.phone}}</h6>
 					</div>
 					<div class="col-md-2 text-center">
-						<h6>Violations:</h6>
-						<h6>{{res.violations.length}}</h6>
+					
+						<h3><a href="" class="black"><span ng-click="reco(res,  1)" class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span></a></h3>
+						<h3>{{res.reco}} <span class="glyphicon glyphicon-star yellow" aria-hidden="true"></span></h3>
+						<h3><a href="" class="black"><span ng-click="reco(res, -1)" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a></h3>
 					
 					</div>
 				</div>
 				
 				<div class="row col-md-12">
-					<a data-toggle="collapse" aria-expanded="false" aria-controls="violations{{res.id}}" href="#violations{{res.id}}">View violations</a>
+					<a ng-show="res.violations.length > 0" data-toggle="collapse" aria-expanded="false" aria-controls="violations{{res.id}}" href="#violations{{res.id}}">View violations ({{res.violations.length}})</a>
 					<p class="lowmarg"> </p>
 					
 					<div class="collapse" ng-attr-id="{{'violations' + res.id}}">

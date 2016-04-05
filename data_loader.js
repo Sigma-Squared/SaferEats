@@ -18,7 +18,7 @@ function load_data(callback) {
     let mystream = csv_stream.createStream(options);
     console.log('Loading data into memory...');
     
-    const fname = 'big_data.csv';
+    const fname = 'med_data.csv';
     const total_lines = { 'small_data.csv': 150, 'med_data.csv': 33012, 'big_data.csv': 245531 };
     let line_count = 0;
     let n_restaurants = 0;
@@ -52,7 +52,8 @@ function load_data(callback) {
                 
                 let new_restaurant  = new restaurant(data.name, data.address, data.city, 
                                         {latitude, longitude}, data.phone || undefined, data.business_ID);
-                update_bounds(new_restaurant);                   
+                update_bounds(new_restaurant);
+				new_restaurant.reco = 0;
                 new_restaurant.add_violation(data.inspection_date, data.inspection_type, data.violation_type, data.inspection_score,
                 data.inspection_result, data.inspection_closed_business, data.violation_description, data.violation_points);
                 dat.push(new_restaurant);

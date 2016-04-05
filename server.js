@@ -79,6 +79,26 @@ function main(data, tree) {
             }
         }
     });
+	
+	app.get('/reco', function(req, res) {
+		console.log("RECO: ");
+		let num = Number(req.query.recom);
+		let name = req.query.name.replace("ORIALMOG", "&");
+		
+		console.log(num);
+		console.log(name);
+		
+		for (let j = 0; j < data.length; j++){
+			var n = data[j].name.toUpperCase();
+			if (n.localeCompare(name) == 0){
+				console.log("Recommending " + name + ", now at: " + data[j].reco);
+				data[j].reco = data[j].reco + num;
+				break;
+			}
+		}
+		res.status(200);
+		res.send("Ok");
+	});
 
     app.get('/', function(req, res) {
         res.status(200);
