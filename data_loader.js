@@ -19,7 +19,7 @@ function load_data(callback) {
     console.log('Loading data into memory...');
     
     const fname = 'big_data.csv';
-    const total_lines = { 'small_data.csv': 150, 'big_data.csv': 245531 };
+    const total_lines = { 'small_data.csv': 150, 'med_data.csv': 33012, 'big_data.csv': 245531 };
     let line_count = 0;
     let n_restaurants = 0;
     let n_violations = 0;

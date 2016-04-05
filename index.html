@@ -1,50 +1,114 @@
 <html>
 
 <head>
-<title>Safer Eats</title>
-<script data-require="angular.js@1.5.0" data-semver="1.5.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
-<link data-require="bootstrap@3.3.1" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
-<script src="./client.js"></script>
-<link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <title>Safer Eats</title>
+    <script data-require="angular.js@1.5.0" data-semver="1.5.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
+	<script data-require="jquery@2.0.0" data-semver="2.0.0" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <link data-require="bootstrap@3.3.1" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <script src="./client.js"></script>
+    <link rel="stylesheet" href="./style.css"></link>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
-<body ng-app='mainApp' ng-controller='mainCtrl' class="container" style="background: linear-gradient(to bottom, white, #DADADA); background: no-repeat">
 
-<div class="container">
+<body ng-app='mainApp' ng-controller='mainCtrl' class="container bg">
 
-<div id="title" class="row text-center">
-<h1>Safer Eats</h1>
-<p>Making <b>your</b> food safer by the day!</p>
-</div>
+    <div class="container">
 
-<form class="row form-inline text-center" id="search">
-<div class="form-group">
-	<input type="text" class="form-control" id="searchBox" ng-model="searchParam" placeholder="i.e. McDonalds">
-<button type="submit" ng-click="search()" class="btn btn-info">Search</button>
-<button type="submit" ng-click="getLoc()" class="btn btn-success">Near me</button>
-</div>
-</form>
+        <div id="title" class="row text-center">
+            <h1><span class="glyphicon glyphicon-cutlery logo" aria-hidden="true"></span> Safer Eats</h1>
+            <p class="slogan">Making <b>your</b> food safer by the day!</p>
+        </div>
 
-</div>
+		<p class="highmarg"> </p>
+		
+        <form class="col-md-5 form-inline text-center" id="search">
+            <div class="form-group">
+				<h4>Search by name:</h4>
+                <input type="text" autocomplete="off" class="form-control" id="searchBox" ng-model="searchParam" placeholder="i.e. McDonalds">
+				<p class="lowmarg"> </p>
+                <button type="submit" ng-click="search()" class="btn btn-info">Search <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </div>
+        </form>
+		
+		<form class="col-md-5 col-md-offset-2 form-inline text-center" id="search">
+            <div class="form-group">
+				<h4>Search by location:</h4>
+                <input type="text" class="form-control" id="lon" ng-model="longitude" placeholder="Longitude">
+                <input type="text" class="form-control" id="lat" ng-model="latitude" placeholder="Latitude">
+				<p class="lowmarg"> </p>
+				<span>Radius (km): </span>
+                <input type="number" min="1" max="10" class="form-control" id="rad" ng-model="radius" placeholder="Radius (km)">
+				<p class="lowmarg"> </p>
+                <button type="submit" ng-click="fillDefault()" class="btn btn-warning"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>
+                <button type="submit" ng-click="areaSearch()" class="btn btn-info">Search <span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                <button type="submit" ng-click="getLoc()" class="btn btn-success"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span></button>
+            </div>
+        </form>
 
-<div class="row text-center" ng-show="haveCoords">
-<pre>Latitude: {{position.coords.latitude}}
-Longitude: {{position.coords.longitude}}</pre>
-</div>
+    </div>
+	
+	<p class="highmarg"> </p>	
 
-<div class="row text-center" ng-show="haveSearchRes">
-<div class="col-md-8 col-md-offset-2">
-<div class="well" ng-repeat="res in rests">
-<h2>{{res.name|firstUp}}</h2>
-<h6>{{res.address}}</h2>
-<h6>{{res.phone}}</h2>
-	<div class="text-left" ng-repeat="vio in res.violations">
-		<h5>Violation ({{vio.date}}): {{vio.desc}}</h5>
+    <!--<div class="row text-center" ng-show="haveCoords">
+        <p>Latitude: {{position.coords.latitude}}</p>
+        <p>Longitude: {{position.coords.longitude}}</p>
+    </div>-->
+	
+	<div class="container row text-center" ng-show="haveSearchRes">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="btn-group">
+					<button class="btn" ng-class="{'btn-warning': isSortIndex(0)}" ng-click="sortBy(0)">Alphabetical (A-Z)</button>
+					<button class="btn" ng-class="{'btn-warning': isSortIndex(1)}" ng-click="sortBy(1)">Alphabetical (Z-A)</button>
+					<button class="btn" ng-class="{'btn-warning': isSortIndex(2)}" ng-click="sortBy(2)">Recommendations</button>
+					<button class="btn" ng-class="{'btn-warning': isSortIndex(3)}" ng-click="sortBy(3)">Least Violations</button>
+					<button class="btn" ng-class="{'btn-warning': isSortIndex(4)}" ng-click="sortBy(4)">Most Violations</button>
+			</div>
+			<p class="lowmarg"> </p>
+			<button class="btn btn-danger" ng-click="clearSort()">Clear</button>
+		</div>
 	</div>
-<br>
-</div>
-</div>
-</div>
+
+    <div class="container row text-center" ng-show="haveSearchRes">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="carded row" ng-repeat="res in rests | orderBy:sorter">
+			
+				<div class="row">
+					<div class="col-md-10">
+						<h2 class="raleway"><a target="_blank" href="https://www.google.ca/#q={{res.name|firstUp}}">{{res.name|firstUp}}</a></h2>
+						<h6>Address: {{res.address}}</h6>
+						<h6>Phone: {{res.phone}}</h6>
+					</div>
+					<div class="col-md-2 text-center">
+						<h6>Violations:</h6>
+						<h6>{{res.violations.length}}</h6>
+					
+					</div>
+				</div>
+				
+				<div class="row col-md-12">
+					<a data-toggle="collapse" aria-expanded="false" aria-controls="violations{{res.id}}" href="#violations{{res.id}}">View violations</a>
+					<p class="lowmarg"> </p>
+					
+					<div class="collapse" ng-attr-id="{{'violations' + res.id}}">
+						<div class="well">
+							<div class="text-left" ng-repeat="vio in res.violations | orderBy:['-closed','-result','-score']">
+							<!--<div class="text-left" ng-repeat="vio in res.violations | orderBy:'score'">-->
+								<h5><span class="veryBad" ng-show="vio.closed">(DANGER) </span>Violation (<b>{{vio.score}}</b>) <span ng-class="[{bad: satisfaction(vio.result)}]">{{vio.result}}</span><br>
+								    ({{vio.date}}): {{vio.desc}}</h5>
+								<p class="topmarg"> </p>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+		<p class="highmarg"> </p>
 
 </body>
 
-</html>		
+</html>
