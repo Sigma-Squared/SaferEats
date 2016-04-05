@@ -1,0 +1,62 @@
+.carded{
+	text-align: left;
+    background-color: #FEFEFE;
+	box-shadow: 3px 3px 5px rgba(0,0,0,0.15);
+	border: 2px solid rgba(0,0,0,0.03);
+	border-radius: 4px;
+	margin-top: 15px;
+	padding: 15px;
+}
+
+h1 {
+	font-family: 'Raleway', sans-serif;
+	font-size: 5em;
+}
+
+h6 {
+	font-family: 'Roboto', sans-serif;
+	font-size: 110%;
+}
+
+.bad{
+	color: red;
+	bold: true;
+}
+
+.veryBad{
+	color: red;
+	underline: true;
+	bold: true;
+	size: 110%;
+}
+
+.slogan {
+	font-family: 'Raleway';
+	font-style: italic;
+}
+
+
+.logo {
+	font-size: 65%;
+}
+
+.bg{
+    background-color: #FAFAFA;
+    overflow-y: scroll;
+}
+
+.lowmarg{
+	margin-top: 5px;
+}
+
+.topmarg{
+	margin-top: 15px;
+}
+
+.highmarg{
+	margin-top: 50px;
+}
+
+.raleway{
+	font-family: 'Raleway', sans-serif;
+}
