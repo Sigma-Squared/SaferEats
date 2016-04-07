@@ -67,9 +67,11 @@ app.controller('mainCtrl', function($scope, $http) {
 					$scope.haveSearchRes = true;
 					
 					for (let j = 0; j < $scope.rests.length ; j++){
-						for (let k = 0; k < $scope.rests[j].violations.length; k++){
-							$scope.rests[j].violations[k].score = parseInt($scope.rests[j].violations[k].score);
-							$scope.rests[j].violations[k].closed = ($scope.rests[j].violations[k].closed === "true");//Boolean($scope.rests[j].violations[k].closed);
+						if ($scope.rests[j].violations != null){
+							for (let k = 0; k < $scope.rests[j].violations.length; k++){
+								$scope.rests[j].violations[k].score = parseInt($scope.rests[j].violations[k].score);
+								$scope.rests[j].violations[k].closed = ($scope.rests[j].violations[k].closed === "true");//Boolean($scope.rests[j].violations[k].closed);
+							}
 						}
 					}
 					
@@ -120,7 +122,11 @@ app.controller('mainCtrl', function($scope, $http) {
 	$scope.clearSort = function(){
 		$scope.sortIndex = 0;
         $scope.rests = [];
-        $scope.haveSearchRes = false;		
+        $scope.haveSearchRes = false;
+		$scope.searchParam = null;
+		$scope.longitude = null;
+		$scope.latitude =null;
+		$scope.radius = 1;
 	}
 	
 	$scope.sortBy = function(by){
@@ -147,36 +153,43 @@ app.controller('mainCtrl', function($scope, $http) {
     $scope.search = function() {
         $scope.rests = [];
         $scope.haveSearchRes = false;
-        var par = {
-            method: 'GET',
-            url: gu + '/mults?substr=' + $scope.searchParam
-        }
-        $http(par).then(function success(response) {
-            //console.log(response);
-            //console.log(response.data);
-            if (response.data != null) {
-                for (let j = 0; j < response.data.length; j++) {
-                    $scope.rests.push(response.data[j]);
-                }
-                $scope.haveSearchRes = true;
-				
-				for (let j = 0; j < $scope.rests.length ; j++){
-					for (let k = 0; k < $scope.rests[j].violations.length; k++){
-						$scope.rests[j].violations[k].score = parseInt($scope.rests[j].violations[k].score);
-						$scope.rests[j].violations[k].closed = ($scope.rests[j].violations[k].closed === "true");//Boolean($scope.rests[j].violations[k].closed);
+		if ($scope.searchParam.length > 2){
+			var par = {
+				method: 'GET',
+				url: gu + '/mults?substr=' + $scope.searchParam
+			}
+			$http(par).then(function success(response) {
+				//console.log(response);
+				//console.log(response.data);
+				if (response.data != null) {
+					for (let j = 0; j < response.data.length; j++) {
+						$scope.rests.push(response.data[j]);
 					}
+					$scope.haveSearchRes = true;
+					
+					for (let j = 0; j < $scope.rests.length ; j++){
+						if ($scope.rests[j].violations != null){
+							for (let k = 0; k < $scope.rests[j].violations.length; k++){
+								$scope.rests[j].violations[k].score = parseInt($scope.rests[j].violations[k].score);
+								$scope.rests[j].violations[k].closed = ($scope.rests[j].violations[k].closed === "true");//Boolean($scope.rests[j].violations[k].closed);
+							}
+						}
+					}
+					
+					console.log($scope.rests);
+					
+					
+				} else {
+					//Note: This only works for requests arrays of length ONE
+					alert("Could not find restaurant");
 				}
-				
-				console.log($scope.rests);
-				
-				
-            } else {
-                //Note: This only works for requests arrays of length ONE
-                alert("Could not find restaurant");
-            }
-            //console.log($scope.rests);
-        }, function failure(response) {
-            console.log("Failure: " + response);
-        });
+				//console.log($scope.rests);
+			}, function failure(response) {
+				console.log("Failure: " + response);
+			});
+		}
+		else {
+			alert("Search must be 3 or more characters");
+		}
     }
 });

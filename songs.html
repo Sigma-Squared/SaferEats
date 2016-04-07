@@ -1,0 +1,49 @@
+<html>
+
+<head>
+<title>Songs</title>
+<script data-require="angular.js@1.5.0" data-semver="1.5.0" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.js"></script>
+<script data-require="jquery@2.0.0" data-semver="2.0.0" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<link data-require="bootstrap@3.3.1" data-semver="3.3.1" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script type="text/javascript">
+var app = angular.module("mainApp", []);
+
+app.controller('mainCtrl', function($scope, $http){
+
+	$scope.songNames = [];
+	
+	var par = {
+		method: 'GET',
+		url: '/allfiles'
+	}
+	$http(par).then(function success(response){
+		$scope.songNames = response.data;
+	}, function failure(response){
+		alert("failed");
+	});
+});
+
+</script>
+</head>
+
+<body ng-app="mainApp" ng-controller="mainCtrl">
+
+<audio controls autoplay>
+	<source src="http://192.168.2.220/American%20idiot.mp3" type="audio.mp3">
+    Your browser does not support the audio element.
+</audio>
+
+<div class="container">
+	<div class="col-md-8 col-md-offset-2">
+		<h1 class="text-center">Songs</h1>	
+		
+		<div ng-repeat="song in songNames">
+			<a class="text-center" ng-href="{{song}}">{{song}}</a>
+		</div>
+	</div>
+</div>
+
+</body>
+
+</html>

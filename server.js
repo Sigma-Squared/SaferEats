@@ -5,6 +5,7 @@ const express = require('express');
 const load_data = require('./data_loader.js');
 const algorithms = require('./algorithms.js');
 const quadtree = require('./simplequadtree.js');
+const fs = require('fs');
 const path = require('path');
 
 function main(data, tree) {
@@ -119,6 +120,28 @@ function main(data, tree) {
         res.status(200);
         res.sendFile(path.join(__dirname + '/favicon.ico'));
     });
+	
+	app.get('/allfiles', function(req, res){
+		res.status(200);
+		res.json(fs.readdirSync(path.join(__dirname + '/public/')));
+	});
+	
+	app.get('/songs', function(req, res){
+		
+		res.status(200);
+        res.sendFile(path.join(__dirname + '/songs.html'));
+	});
+	
+	app.get('/rand', function(req, res){
+		
+		var songs = fs.readdirSync(path.join(__dirname + '/public/'));
+		res.writeHead(302, {
+			'Location': songs[Math.floor(Math.random()*songs.length)]
+		});
+		res.end();
+	});
+	
+	app.use(express.static('public'));
 
     app.listen(port, function() {
         console.log(`Server running on port ${port}. (^C to exit)`);
