@@ -1,4 +1,4 @@
-// Ignore this, it's just for VS Code.
+// iPhone fixed
 /// <reference path="typings/main.d.ts" />
 'use strict';
 const express = require('express');

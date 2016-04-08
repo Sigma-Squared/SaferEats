@@ -1,3 +1,5 @@
+//iPhone fixed
+
 'use strict';
 class SimpleQuadTree {
     constructor(min_x, min_y, max_x, max_y,  thisdepth, max_depth, root) {

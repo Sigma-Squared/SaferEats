@@ -1,3 +1,4 @@
+//iPhone fixed
 function binaryIndexOf(searchElement, data) {
     var minIndex = 0;
     var maxIndex = data.length - 1;

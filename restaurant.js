@@ -1,3 +1,4 @@
+//iPhone fixed
 'use strict';
 function deg2rad(deg) {
     return deg * Math.PI/180; 
