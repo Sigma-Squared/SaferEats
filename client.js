@@ -31,6 +31,160 @@ app.controller('mainCtrl', function($scope, $http) {
     $scope.sortIndex = 0;
     $scope.longitude = null;
     $scope.latitude = null;
+	
+	//Alphabetical A-Z
+	$scope.mergeSort_az = function(items){
+
+		if (items.length < 2) {
+			return items;
+		}
+
+		var middle = Math.floor(items.length / 2);
+		var left = items.slice(0, middle);
+		var right = items.slice(middle);
+
+		return $scope.merge_az($scope.mergeSort_az(left), $scope.mergeSort_az(right));
+	}
+	
+	$scope.merge_az = function(left, right){
+		var result  = [];
+		var left_i = 0;
+		var right_i = 0;
+		
+		while (left_i < left.length && right_i < right.length){
+			if (left[left_i].name < right[right_i].name){
+				result.push(left[left_i++]);
+			} else {
+				result.push(right[right_i++]);
+			}
+		}
+
+		return result.concat(left.slice(left_i)).concat(right.slice(right_i));
+	}
+ 
+ 
+	//Alphabetical Z-A
+	$scope.mergeSort_za = function(items){
+
+		if (items.length < 2) {
+			return items;
+		}
+
+		var middle = Math.floor(items.length / 2);
+		var left = items.slice(0, middle);
+		var right = items.slice(middle);
+
+		return $scope.merge_za($scope.mergeSort_za(left), $scope.mergeSort_za(right));
+	}
+	
+	$scope.merge_za = function(left, right){
+		var result  = [];
+		var left_i = 0;
+		var right_i = 0;
+		
+		while (left_i < left.length && right_i < right.length){
+			if (left[left_i].name > right[right_i].name){
+				result.push(left[left_i++]);
+			} else {
+				result.push(right[right_i++]);
+			}
+		}
+
+		return result.concat(left.slice(left_i)).concat(right.slice(right_i));
+	}
+ 
+ 
+	//Reco
+	$scope.mergeSort_reco = function(items){
+
+		if (items.length < 2) {
+			return items;
+		}
+
+		var middle = Math.floor(items.length / 2);
+		var left = items.slice(0, middle);
+		var right = items.slice(middle);
+
+		return $scope.merge_reco($scope.mergeSort_reco(left), $scope.mergeSort_reco(right));
+	}
+	
+	$scope.merge_reco = function(left, right){
+		var result  = [];
+		var left_i = 0;
+		var right_i = 0;
+		
+		while (left_i < left.length && right_i < right.length){
+			if (left[left_i].reco > right[right_i].reco){
+				result.push(left[left_i++]);
+			} else {
+				result.push(right[right_i++]);
+			}
+		}
+
+		return result.concat(left.slice(left_i)).concat(right.slice(right_i));
+	}
+ 
+ 
+	//Vioaltions Up
+ 	$scope.mergeSort_vio = function(items){
+
+		if (items.length < 2) {
+			return items;
+		}
+
+		var middle = Math.floor(items.length / 2);
+		var left = items.slice(0, middle);
+		var right = items.slice(middle);
+
+		return $scope.merge_vio($scope.mergeSort_vio(left), $scope.mergeSort_vio(right));
+	}
+	
+	$scope.merge_vio = function(left, right){
+		var result  = [];
+		var left_i = 0;
+		var right_i = 0;
+		
+		while (left_i < left.length && right_i < right.length){
+			if (left[left_i].violations.length < right[right_i].violations.length){
+				result.push(left[left_i++]);
+			} else {
+				result.push(right[right_i++]);
+			}
+		}
+
+		return result.concat(left.slice(left_i)).concat(right.slice(right_i));
+	}
+ 
+ 
+	//Violations down
+  	$scope.mergeSort_oiv = function(items){
+
+		if (items.length < 2) {
+			return items;
+		}
+
+		var middle = Math.floor(items.length / 2);
+		var left = items.slice(0, middle);
+		var right = items.slice(middle);
+
+		return $scope.merge_oiv($scope.mergeSort_oiv(left), $scope.mergeSort_oiv(right));
+	}
+	
+	$scope.merge_oiv = function(left, right){
+		var result  = [];
+		var left_i = 0;
+		var right_i = 0;
+		
+		while (left_i < left.length && right_i < right.length){
+			if (left[left_i].violations.length > right[right_i].violations.length){
+				result.push(left[left_i++]);
+			} else {
+				result.push(right[right_i++]);
+			}
+		}
+
+		return result.concat(left.slice(left_i)).concat(right.slice(right_i));
+	}
  
     $scope.satisfaction = function(ob){
         return !ob.localeCompare("Unsatisfactory");
@@ -52,7 +206,7 @@ app.controller('mainCtrl', function($scope, $http) {
         if ($scope.latitude != null && $scope.longitude != null){
             var par = {
                 method: 'GET',
-                url: '/area?lat=' + $scope.latitude + '&long=' + $scope.longitude + '&dist=' + ($scope.radius * 1000)
+                url: '/safereats/area?lat=' + $scope.latitude + '&long=' + $scope.longitude + '&dist=' + ($scope.radius * 1000)
             }
             $http(par).then(function success(response){
  
@@ -81,9 +235,9 @@ app.controller('mainCtrl', function($scope, $http) {
                     alert("Could not find nearby restaurants");
                 }
  
-            }, function failure(response){
-                //Failure
-                console.log("Failure: " + response);
+            }, function faleft_iure(response){
+                //Faleft_iure
+                console.log("Faleft_iure: " + response);
             });
         }
         else {
@@ -97,20 +251,20 @@ app.controller('mainCtrl', function($scope, $http) {
  
         var par = {
             method: 'GET',
-            url: '/reco?recom=' + num + '&name=' + cleanName
+            url: '/safereats/reco?recom=' + num + '&name=' + cleanName
         }
         $http(par).then(function success(response){
  
             res.reco += num;
  
-        }, function failure(response){
+        }, function faleft_iure(response){
  
             alert("Could not vote!");
  
         });
     }
  
-    $scope.fillDefault = function(){
+    $scope.fleft_ilDefault = function(){
         $scope.longitude = -121.9910337;
         $scope.latitude = 47.2027651;
     }
@@ -129,19 +283,24 @@ app.controller('mainCtrl', function($scope, $http) {
         $scope.sortIndex = by;
         switch(by){
             case 0:
-                $scope.sorter = "name";
+				$scope.rests = $scope.mergeSort_az($scope.rests);
+                //$scope.sorter = "name";
                 break;
             case 1:
-                $scope.sorter = "-name";
+				$scope.rests = $scope.mergeSort_za($scope.rests);
+                //$scope.sorter = "-name";
                 break;
             case 2:
-                $scope.sorter = "-reco";
+				$scope.rests = $scope.mergeSort_reco($scope.rests);
+                //$scope.sorter = "-reco";
                 break;
             case 3:
-                $scope.sorter = "violations.length";
+				$scope.rests = $scope.mergeSort_vio($scope.rests);
+                //$scope.sorter = "violations.length";
                 break;
             case 4:
-                $scope.sorter = "-violations.length";
+				$scope.rests = $scope.mergeSort_oiv($scope.rests);
+                //$scope.sorter = "-violations.length";
                 break;
         }
     }
@@ -151,7 +310,7 @@ app.controller('mainCtrl', function($scope, $http) {
         $scope.haveSearchRes = false;
         var par = {
             method: 'GET',
-            url: gu + '/mults?substr=' + $scope.searchParam
+            url: gu + '/safereats/mults?substr=' + $scope.searchParam
         }
         $http(par).then(function success(response) {
             //console.log(response);
@@ -177,8 +336,8 @@ app.controller('mainCtrl', function($scope, $http) {
                 alert("Could not find restaurant");
             }
             //console.log($scope.rests);
-        }, function failure(response) {
-            console.log("Failure: " + response);
+        }, function faleft_iure(response) {
+            console.log("Faleft_iure: " + response);
         });
     }
 });

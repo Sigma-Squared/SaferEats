@@ -10,8 +10,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-    <script src="./client.js"></script>
-    <link rel="stylesheet" href="./style.css"></link>
+    <script src="./safereats/client.js"></script>
+    <link rel="stylesheet" href="./safereats/style.css"></link>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 
@@ -84,7 +84,7 @@
 
     <div class="container row text-center" ng-show="haveSearchRes">
         <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2 col-lg-8 col-lg-offset-2">
-            <div class="carded row" ng-repeat="res in rests | orderBy:sorter">
+            <div class="carded row" ng-repeat="res in rests">
 			
 				<div class="row">
 					<div class="col-md-10 col-sm-10 col-xs-10">

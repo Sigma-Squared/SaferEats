@@ -14,13 +14,13 @@ function main(data, tree) {
     let app = express();
     app.set('json spaces', 3);
 
-    app.get('/binary', function(req, res) {
+    app.get('/safereats/binary', function(req, res) {
         let name = req.query.name;
 
         if (!name) {
             console.log("Name query not found.");
             res.send(errMsg + '<br\>' +
-                'Proper form: <pre>/binary?name=&lt;NAME&gt;</pre>');
+                'Proper form: <pre>/safereats/binary?name=&lt;NAME&gt;</pre>');
         } else {
             name = name.toUpperCase();
             console.log(`Doing binary search for name:"${name}"`);
@@ -35,7 +35,7 @@ function main(data, tree) {
         }
     });
 
-    app.get('/area', function(req, res) {
+    app.get('/safereats/area', function(req, res) {
         let long = Number(req.query.long);
         let lat = Number(req.query.lat);
         let radius = Number(req.query.dist);
@@ -62,7 +62,7 @@ function main(data, tree) {
         }
     });
 
-    app.get('/mults', function(req, res) {
+    app.get('/safereats/mults', function(req, res) {
         let substr = req.query.substr;
 
         if (!substr) {
@@ -81,7 +81,7 @@ function main(data, tree) {
         }
     });
 	
-	app.get('/reco', function(req, res) {
+	app.get('/safereats/reco', function(req, res) {
 		console.log("RECO: ");
 		let num = Number(req.query.recom);
 		let name = req.query.name.replace("ORIALMOG", "&");
@@ -101,22 +101,22 @@ function main(data, tree) {
 		res.send("Ok");
 	});
 
-    app.get('/', function(req, res) {
+    app.get('/safereats/', function(req, res) {
         res.status(200);
         res.sendFile(path.join(__dirname + '/index.html'));
     });
 
-    app.get('/client.js', function(req, res) {
+    app.get('/safereats/client.js', function(req, res) {
         res.status(200);
         res.sendFile(path.join(__dirname + '/client.js'));
     });
 
-    app.get('/style.css', function(req, res) {
+    app.get('/safereats/style.css', function(req, res) {
         res.status(200);
         res.sendFile(path.join(__dirname + '/style.css'));
     });
 
-    app.get('/favicon.ico', function(req, res) {
+    app.get('/safereats/favicon.ico', function(req, res) {
         res.status(200);
         res.sendFile(path.join(__dirname + '/favicon.ico'));
     });
